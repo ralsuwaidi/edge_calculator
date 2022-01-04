@@ -16,11 +16,15 @@ urlpatterns = [
     path("users/", include("edge_calculator.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    path(
+        "calculator/",
+        include("edge_calculator.calculator.urls", namespace="calculator"),
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 if settings.DEBUG:
-    # This allows the error pages to be debugged during development, just visit
+    # This allows the error pages to be debugged during development, just visits
     # these url in browser to see how these error pages look like.
     urlpatterns += [
         path(
