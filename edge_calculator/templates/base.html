@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block title %}EDGE Calculator{% endblock title %}</title>
+    <title>{% block title %}EDGE Internal{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Price Calculator For EDGE Cycling">
     <meta name="author" content="Rashed AlSuwaidi">
@@ -26,7 +26,7 @@
       <!-- Tabler JS -->
       <script src="https://unpkg.com/@tabler/core@latest/dist/js/tabler.min.js"></script>
       <!-- Your stuff: Third-party javascript libraries go here -->
-
+      <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
       <!-- place project specific Javascript in this file -->
       <script defer src="{% static 'js/project.js' %}"></script>
 
@@ -42,7 +42,7 @@
           <button class="navbar-toggler navbar-toggler-right" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <a class="navbar-brand" href="{% url 'home' %}">EDGE Calculator</a>
+          <a class="navbar-brand" href="{% url 'home' %}">EDGE </a>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
