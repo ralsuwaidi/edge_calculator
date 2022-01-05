@@ -42,6 +42,26 @@ class CustomBikeForm(forms.ModelForm):
             "special_items_choice",
         ]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.initial["frame_choice"] = Brand.objects.first()
+        self.initial["wheelset_choice"] = Brand.objects.get(name="None", component="WS")
+        self.initial["drivetrain_choice"] = Brand.objects.get(
+            name="None", component="DT"
+        )
+        self.initial["handlebar_choice"] = Brand.objects.get(
+            name="None", component="HB"
+        )
+        self.initial["stem_choice"] = Brand.objects.get(name="None", component="ST")
+        self.initial["seatpost_choice"] = Brand.objects.get(name="None", component="SP")
+        self.initial["saddle_choice"] = Brand.objects.get(name="None", component="SA")
+        self.initial["bottombracket_choice"] = Brand.objects.get(
+            name="None", component="BB"
+        )
+        self.initial["special_items_choice"] = Brand.objects.get(
+            name="None", component="SI"
+        )
+
 
 class FrameForm(forms.Form):
     frame = forms.ModelChoiceField(queryset=Brand.objects.filter(component="FR"))
