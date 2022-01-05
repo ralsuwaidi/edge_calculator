@@ -1,6 +1,12 @@
 from django import forms
 
-from .models import Brand, CustomBike
+from .models import Brand, CustomBike, CustomBikeUser
+
+
+class UserForm(forms.ModelForm):
+    class Meta:
+        model = CustomBikeUser
+        fields = "__all__"
 
 
 class CustomBikeForm(forms.ModelForm):

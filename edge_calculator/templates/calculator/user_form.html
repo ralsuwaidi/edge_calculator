@@ -47,18 +47,3 @@ Calculator
 
 
         {% endblock content %}
-
-        {% block inline_javascript %}
-        <script>
-            window.addEventListener('DOMContentLoaded', () => {
-
-
-                $(function () {
-                    $("#bike-form").change(function () {
-                        $("form").submit();
-                    });
-                });
-
-            });
-        </script>
-        {% endblock inline_javascript %}

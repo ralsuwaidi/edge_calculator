@@ -1,8 +1,8 @@
 # Create your views here.
 from django.shortcuts import render
 
-from .forms import CustomBikeForm
-from .models import Brand, CustomBike
+from .forms import CustomBikeForm, UserForm
+from .models import Brand, CustomBike, CustomBikeUser
 
 
 def calculator(request):
@@ -21,7 +21,6 @@ def calculator(request):
             bottombracket_choice = form.cleaned_data["bottombracket_choice"]
             special_items_choice = form.cleaned_data["special_items_choice"]
 
-        if "accept_components" in request.POST:
             frame = Brand.objects.get(name=frame_choice, component="FR")
             wheelset = Brand.objects.get(name=wheelset_choice, component="WS")
             drivetrain = Brand.objects.get(name=drivetrain_choice, component="DT")
@@ -32,7 +31,7 @@ def calculator(request):
             bottombracket = Brand.objects.get(name=bottombracket_choice, component="BB")
             special_items = Brand.objects.get(name=special_items_choice, component="SI")
 
-            custom_bike = CustomBike.objects.create(
+            custom_bike = CustomBike(
                 frame=frame,
                 wheelset=wheelset,
                 drivetrain=drivetrain,
@@ -44,18 +43,45 @@ def calculator(request):
                 special_items=special_items,
             )
 
-            print(custom_bike.frame)
-            print(wheelset.full_price)
-            print(drivetrain.full_price)
-            print(handlebar.full_price)
-            print(stem.full_price)
-            print(seatpost.full_price)
-            print(saddle.full_price)
-            print(bottombracket.full_price)
-            print(special_items.full_price)
+            price = custom_bike.price
+            context["price"] = price
+
+        if "accept_components" in request.POST:
+            pass
 
     else:
-        form = CustomBikeForm(initial={"seatpost_choice": "None"})
+        form = CustomBikeForm()
+
+        custom_bike = CustomBike(
+            frame=Brand.objects.first(),
+            wheelset=Brand.objects.get(name="None", component="WS"),
+            drivetrain=Brand.objects.get(name="None", component="DT"),
+            handlebar=Brand.objects.get(name="None", component="HB"),
+            stem=Brand.objects.get(name="None", component="ST"),
+            seatpost=Brand.objects.get(name="None", component="SP"),
+            saddle=Brand.objects.get(name="None", component="SA"),
+            bottombracket=Brand.objects.get(name="None", component="BB"),
+            special_items=Brand.objects.get(name="None", component="SI"),
+        )
+
+        price = custom_bike.price
+        context["price"] = price
 
     context["form"] = form
     return render(request, "calculator/home.html", context)
+
+
+def invoice(request):
+    context = {}
+
+    return render(request, "calculator/invoice.html", context)
+
+
+def user_form(request):
+
+    context = {}
+
+    form = UserForm()
+    context["form"] = form
+
+    return render(request, "calculator/user_form.html", context)
