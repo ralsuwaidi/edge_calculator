@@ -69,13 +69,7 @@ class CustomBikeForm(forms.ModelForm):
         )
 
 
-class FrameForm(forms.Form):
-    frame = forms.ModelChoiceField(queryset=Brand.objects.filter(component="FR"))
-
-    class Meta:
-        model = Brand
-        fields = ["frame"]
-
-
-class WheelsetForm(forms.Form):
-    wheel_set = forms.ModelChoiceField(queryset=Brand.objects.filter(component="WS"))
+class ChooseUserForm(forms.Form):
+    user = forms.ModelChoiceField(
+        queryset=CustomBikeUser.objects.all(), empty_label="(No User Yet)"
+    )

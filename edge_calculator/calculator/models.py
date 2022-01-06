@@ -28,8 +28,8 @@ class CustomBikeUser(models.Model):
     last_name = models.CharField(_("Last Name"), max_length=100)
     email = models.EmailField(_("Email"))
     phone_regex = RegexValidator(
-        regex=r"^\+?1?\d{9,9}$",
-        message="Phone number must be entered in the format: '+50XXXXXXX'.",
+        regex=r"^\+?1?\d{9,12}$",
+        message="Phone number must be entered in the format: '+971XXXXXXXXX'.",
     )
     phone_number = models.CharField(
         validators=[phone_regex], max_length=17, blank=True
@@ -78,6 +78,35 @@ class Brand(models.Model):
     def price(self):
         return self.discounted_price or self.full_price
 
+    def component_description(self):
+
+        if self.component == "FR":
+            return "Cool bycicle frame"
+
+        if self.component == "WS":
+            return "Cool bycicle Wheel Set"
+
+        if self.component == "DT":
+            return "Cool bycicle Drive train"
+
+        if self.component == "HB":
+            return "Cool bycicle Handle Bar"
+
+        if self.component == "ST":
+            return "Cool bycicle Stem"
+
+        if self.component == "SP":
+            return "Cool bycicle Seat Post"
+
+        if self.component == "SA":
+            return "Cool bycicle Saddle"
+
+        if self.component == "BB":
+            return "Cool bycicle Bottom Bracket"
+
+        if self.component == "SI":
+            return "More Special Item"
+
 
 class CustomBike(models.Model):
     frame = models.ForeignKey(Brand, related_name="frame", on_delete=models.CASCADE)
@@ -115,3 +144,20 @@ class CustomBike(models.Model):
             + self.bottombracket.price
             + self.special_items.price
         )
+
+    @property
+    def all(self):
+        return [
+            self.frame,
+            self.wheelset,
+            self.drivetrain,
+            self.handlebar,
+            self.stem,
+            self.seatpost,
+            self.saddle,
+            self.bottombracket,
+            self.special_items,
+        ]
+
+    def ordered(self):
+        return [i for i in self.all if i.name != "None"]

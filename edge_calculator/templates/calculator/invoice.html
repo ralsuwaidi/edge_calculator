@@ -30,19 +30,19 @@ Invoice
             <div class="col-6">
                 <p class="h3">EDGE Cycling</p>
                 <address>
-                    Street Address<br>
-                    State, City<br>
-                    Region, Postal Code<br>
-                    ltd@example.com
+                    Zahra Breeze 2<br>
+                    Nashma Town Square<br>
+                    Dubai, UAE<br>
+                    omar@edgecycling.ae
                 </address>
             </div>
             <div class="col-6 text-end">
-                <p class="h3">Client</p>
+                <p class="h3">{{user.first_name}} {{user.last_name}}</p>
                 <address>
-                    Street Address<br>
-                    State, City<br>
-                    Region, Postal Code<br>
-                    ctr@example.com
+                    {{user.street_adress}}<br>
+                    {{user.area}}<br>
+                    {{user.city}}, UAE<br>
+                    {{user.email}}
                 </address>
             </div>
             <div class="col-12 my-5">
@@ -59,45 +59,30 @@ Invoice
                     <th class="text-end" style="width: 1%">Amount</th>
                 </tr>
             </thead>
+
+            {% for brand in bike.ordered %}
+
             <tr>
-                <td class="text-center">1</td>
+                <td class="text-center">{{ forloop.counter }}</td>
                 <td>
-                    <p class="strong mb-1">Logo Creation</p>
-                    <div class="text-muted">Logo and business cards design</div>
+                    <p class="strong mb-1">{{ brand.name }}</p>
+                    <div class="text-muted">{{brand.component_description}}</div>
                 </td>
                 <td class="text-center">
                     1
                 </td>
-                <td class="text-end">$1.800,00</td>
-                <td class="text-end">$1.800,00</td>
+                <td class="text-end">{{ brand.price }}</td>
+                <td class="text-end">{{ brand.price }}</td>
             </tr>
-            <tr>
-                <td class="text-center">2</td>
-                <td>
-                    <p class="strong mb-1">Online Store Design &amp; Development</p>
-                    <div class="text-muted">Design/Development for all popular modern browsers</div>
-                </td>
-                <td class="text-center">
-                    1
-                </td>
-                <td class="text-end">$20.000,00</td>
-                <td class="text-end">$20.000,00</td>
-            </tr>
-            <tr>
-                <td class="text-center">3</td>
-                <td>
-                    <p class="strong mb-1">App Design</p>
-                    <div class="text-muted">Promotional mobile application</div>
-                </td>
-                <td class="text-center">
-                    1
-                </td>
-                <td class="text-end">$3.200,00</td>
-                <td class="text-end">$3.200,00</td>
-            </tr>
+
+            {% endfor %}
+
+
+
+
             <tr>
                 <td colspan="4" class="strong text-end">Subtotal</td>
-                <td class="text-end">$25.000,00</td>
+                <td class="text-end">{{bike.price}}</td>
             </tr>
             <tr>
                 <td colspan="4" class="strong text-end">Vat Rate</td>

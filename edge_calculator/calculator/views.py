@@ -1,11 +1,15 @@
 # Create your views here.
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
-from .forms import CustomBikeForm, UserForm
-from .models import Brand, CustomBike, CustomBikeUser
+from .forms import ChooseUserForm, CustomBikeForm, UserForm
+from .models import Brand, CustomBike
+
+user_g = None
+bike_g = None
 
 
 def calculator(request):
+    global bike_g
     context = {}
 
     if request.POST:
@@ -47,7 +51,9 @@ def calculator(request):
             context["price"] = price
 
         if "accept_components" in request.POST:
-            pass
+            bike_g = custom_bike
+
+            return redirect("calculator:user_form")
 
     else:
         form = CustomBikeForm()
@@ -71,17 +77,29 @@ def calculator(request):
     return render(request, "calculator/home.html", context)
 
 
-def invoice(request):
-    context = {}
-
-    return render(request, "calculator/invoice.html", context)
-
-
 def user_form(request):
-
+    global user_g, bike_g
     context = {}
 
-    form = UserForm()
+    if request.POST:
+        form = UserForm(request.POST or None)
+        if form.is_valid():
+            user_g = form.save()
+            return redirect("calculator:invoice")
+
+    form = UserForm(request.POST or None)
     context["form"] = form
+    context["bike"] = bike_g
 
     return render(request, "calculator/user_form.html", context)
+
+
+def invoice(request):
+    global user_g, bike_g
+
+    context = {}
+    context["user"] = user_g
+    context["bike"] = bike_g
+    print(bike_g)
+
+    return render(request, "calculator/invoice.html", context)
