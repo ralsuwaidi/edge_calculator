@@ -47,7 +47,7 @@ def calculator(request):
                 special_items=special_items,
             )
 
-            price = custom_bike.price
+            price = custom_bike.display_price
             context["price"] = price
 
         if "accept_components" in request.POST:
@@ -70,7 +70,7 @@ def calculator(request):
             special_items=Brand.objects.get(name="None", component="SI"),
         )
 
-        price = custom_bike.price
+        price = custom_bike.display_price
         context["price"] = price
 
     context["form"] = form
@@ -84,7 +84,7 @@ def user_form(request):
     if request.POST:
         form = UserForm(request.POST or None)
         if form.is_valid():
-            user_g = form.save()
+            user_g = form.save(commit=False)
             return redirect("calculator:invoice")
 
     form = UserForm(request.POST or None)
@@ -101,5 +101,24 @@ def invoice(request):
     context["user"] = user_g
     context["bike"] = bike_g
     print(bike_g)
+
+    return render(request, "calculator/invoice.html", context)
+
+
+def invoice_confirm(request):
+    global user_g, bike_g
+
+    # save user and bike
+    user_g.save()
+    bike_g.save()
+
+    context = {}
+    context["user"] = user_g
+    context["bike"] = bike_g
+    context["confirm"] = True
+
+    # reset globals
+    user_g = None
+    bike_g = None
 
     return render(request, "calculator/invoice.html", context)

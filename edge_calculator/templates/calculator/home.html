@@ -13,16 +13,7 @@ Calculator
     <div class="container-tight ">
 
         <div class="card card-md">
-            <div class="card-body text-center py-4 p-sm-5">
-                {% if price %}
-                <h1 class="">{{price}} DHS</h1>
 
-                {% endif %}
-                <h2 class="mt-3">EDGE Calculator!</h1>
-                    <p class="text-muted">This is your fancy edge calculator with so many cool things you can do with
-                        it!</p>
-            </div>
-            <div class="hr-text hr-text-center hr-text-spaceless">Component list</div>
             <div class="card-body">
 
 
@@ -30,6 +21,16 @@ Calculator
                     {% csrf_token %}
                     {{ form|crispy }}
             </div>
+            <div class="hr-text hr-text-center hr-text-spaceless">Price</div>
+            <div class="card-body text-center py-4 p-sm-5">
+
+                {% if price %}
+                <h1 class="">{{price}}</h1>
+                {% endif %}
+                <h2 class="mt-3">Total Price in AED</h1>
+                    <p class="text-muted">Click continue to create a user for this awesome new bike</p>
+            </div>
+
         </div>
         <div class="row align-items-center mt-3">
             <div class="col-4">

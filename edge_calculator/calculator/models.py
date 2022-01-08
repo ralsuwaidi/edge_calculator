@@ -71,6 +71,10 @@ class Brand(models.Model):
     )
     component = models.CharField(choices=COMPONENT_CHOICES, default=FRAME, max_length=2)
 
+    @property
+    def display_price(self):
+        return f"{self.price:,}"
+
     def __str__(self) -> str:
         return self.name
 
@@ -161,3 +165,7 @@ class CustomBike(models.Model):
 
     def ordered(self):
         return [i for i in self.all if i.name != "None"]
+
+    @property
+    def display_price(self):
+        return f"{self.price:,}"
